@@ -1,3 +1,5 @@
+import 'package:app_tesing/Controller/data_handling_loca.dart';
+import 'package:app_tesing/components/navigator_state_ser.dart';
 import 'package:app_tesing/firebase_options.dart';
 import 'package:app_tesing/models/restaurant.dart';
 import 'package:app_tesing/pages/splashScreen.dart';
@@ -16,9 +18,11 @@ void main() async {
       providers: [
         // theme provider
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        // ChangeNotifierProvider(create: (context) => NavigatorStateSer()),
         // restaurant provider
         ChangeNotifierProvider(create: (context) => Restaurant()),
         ChangeNotifierProvider(create: (context) => RequestDataHolding()),
+        ChangeNotifierProvider(create: (context) => DataHandlingLocal()),
       ],
       child: MyApp(),
     ),
