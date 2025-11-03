@@ -25,8 +25,7 @@ class MyTabBar extends StatelessWidget {
     return Container(
       child: TabBar(
         controller: tabController,
-        tabs: const [Tab(text: "Food")],
-        //  tabs: _buildCategoryTabs()
+        tabs: [Tab(text: FoodCate.values.first.toString().split('.').last)],
       ),
     );
   }

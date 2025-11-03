@@ -1,42 +1,67 @@
 import 'dart:io';
-
-import 'package:app_tesing/models/data_register.dart';
 import 'package:flutter/material.dart';
+import 'package:app_tesing/models/profile.dart';
 
 class DataHandlingLocal extends ChangeNotifier {
-  DataRegister? _registerData;
+  Profile? _profile;
 
-  DataRegister? get registerData => _registerData;
+  Profile? get profileData => _profile;
 
-  set registerData(DataRegister? regData) {
-    _registerData = regData;
+  /// Replace entire profile
+  set profileData(Profile? profile) {
+    _profile = profile;
     notifyListeners();
   }
 
-  // ✅ safely update image field and notify UI
-  void updateImage(File? imageFile) {
-    if (_registerData != null) {
-      _registerData = DataRegister(
-        dataLogin: _registerData!.dataLogin,
-        otp: _registerData!.otp,
-        phoneNumber: _registerData!.phoneNumber,
-        image: imageFile,
-      );
-      notifyListeners(); // <--- This is the key!
+  /// ✅ Update using full Profile object
+  void updateProfile(Profile profile) {
+    if (_profile == null) {
+      _profile = profile;
     } else {
-      // If _registerData is null, initialize it
-      _registerData = DataRegister(image: imageFile);
-      notifyListeners();
+      _profile!
+        ..fullName = profile.fullName ?? _profile!.fullName
+        ..phone = profile.phone ?? _profile!.phone
+        ..birthDate = profile.birthDate ?? _profile!.birthDate
+        ..email = profile.email ?? _profile!.email
+        ..imageUrl = profile.imageUrl ?? _profile!.imageUrl
+        ..image = profile.image ?? _profile!.image;
     }
-  }
-
-  void cleanRegisterData() {
-    _registerData = null;
     notifyListeners();
   }
 
-  // set image(File? img) {
-  //   _image = img;
-  //   notifyListeners();
-  // }
+  /// ✅ Update only specific fields (builder style)
+  DataHandlingLocal update({
+    String? fullName,
+    String? phone,
+    String? birthDate,
+    String? email,
+    String? imageUrl,
+    File? image,
+  }) {
+    _profile ??= Profile();
+
+    if (fullName != null) _profile!.fullName = fullName;
+    if (phone != null) _profile!.phone = phone;
+    if (birthDate != null) _profile!.birthDate = birthDate;
+    if (email != null) _profile!.email = email;
+    if (imageUrl != null) _profile!.imageUrl = imageUrl;
+    if (image != null) _profile!.image = image;
+
+    notifyListeners();
+    return this; // chainable
+  }
+
+  /// ✅ Clear local profile
+  void clear() {
+    _profile = null;
+    notifyListeners();
+  }
 }
+// final newProfile = Profile(
+//   fullName: "John Doe",
+//   phone: "0987654321",
+//   birthDate: "2001-01-01",
+//   email: "john@example.com",
+// );
+
+// context.read<DataHandlingLocal>().updateProfile(newProfile);

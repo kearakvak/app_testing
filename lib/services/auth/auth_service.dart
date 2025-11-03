@@ -14,11 +14,8 @@ class AuthService {
     // try sign user in
     try {
       //sign user in
-      UserCredential userCredential =
-          await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
       return userCredential;
     }
     // catch any errors
@@ -32,11 +29,8 @@ class AuthService {
     // try sign user up
     try {
       //sign user in
-      UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
       return userCredential;
     }
     // catch any errors
@@ -48,5 +42,13 @@ class AuthService {
   //sign out
   Future<void> signOut() async {
     return await _firebaseAuth.signOut();
+  }
+
+  String? getCurrentUserEmail() {
+    return _firebaseAuth.currentUser?.email;
+  }
+
+  bool isEmailVerified() {
+    return _firebaseAuth.currentUser?.emailVerified ?? false;
   }
 }

@@ -33,7 +33,8 @@ class _HomePageState extends State<HomePage>
     // TODO: implement initState
     super.initState();
     _tabController = TabController(
-      length: FoodCategory.values.length,
+      // length: FoodCategory.values.length,
+      length: FoodCate.values.length,
       vsync: this,
     );
     // ✅ Fetch data once when page starts

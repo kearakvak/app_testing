@@ -1,21 +1,21 @@
 import 'package:flutter/widgets.dart';
 
 class NavigatorStateSer {
-  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
-  static BuildContext context() {
-    return navigatorKey.currentContext!;
-  }
+  // Null-safe getter
+  static BuildContext? get maybeContext => navigatorKey.currentContext;
 
-  // Optional: Method that throws descriptive error if context is null
+  // Forceful getter with error message
   static BuildContext get requiredContext {
-    final context = navigatorKey.currentContext;
-    if (context == null) {
+    final ctx = navigatorKey.currentContext;
+    if (ctx == null) {
       throw FlutterError(
-        'NavigatorStateSer.requiredContext was called before the Navigator was built.\n'
-        'Make sure your app is initialized and the Navigator is mounted before accessing the context.',
+        'NavigatorStateSer.requiredContext called before Navigator was built.\n'
+        'Make sure MaterialApp(navigatorKey: NavigatorStateSer.navigatorKey) is built.',
       );
     }
-    return context;
+    return ctx;
   }
 }
