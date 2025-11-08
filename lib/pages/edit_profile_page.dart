@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app_tesing/Controller/data_handling_loca.dart';
 import 'package:app_tesing/components/app_button.dart';
 import 'package:app_tesing/components/app_text_field.dart';
+import 'package:app_tesing/components/app_text_field_date.dart';
 import 'package:app_tesing/components/dialog/dialog_text.dart';
 import 'package:app_tesing/components/image_helper.dart';
 import 'package:app_tesing/components/profile_image.dart';
@@ -55,6 +56,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     lastNameFocus.dispose();
     // passwordFocus.dispose();
     // confirmPFocus.dispose();
+    dateFocus.dispose();
     phoneFocus.dispose();
 
     super.dispose();
@@ -138,7 +140,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                     spaceBetweenFielter,
                     _name("Date of birth"),
-                    AppTextField(
+                    AppTextFieldDate(
                       icon: Icons.date_range_outlined,
                       controller: dateController,
                       focusNode: dateFocus,
@@ -213,7 +215,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                 // Save to Firestore safely
                 if (dataProfile != null) {
+                  // showDialog(
+                  //   context: context,
+                  //   builder: (context) =>
+                  //       AlertDialog(title: Text("it Sccessfluly")),
+                  // );
                   await service.saveOrUpdateProfile(dataProfile);
+                  // Navigator.pop(context);
                 }
               }
 

@@ -29,8 +29,8 @@ class DataHandlingLocal extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// ✅ Update only specific fields (builder style)
-  DataHandlingLocal update({
+  /// ✅ Update only specific fields (builder style) - FIXED: return void
+  void update({
     String? fullName,
     String? phone,
     String? birthDate,
@@ -48,7 +48,6 @@ class DataHandlingLocal extends ChangeNotifier {
     if (image != null) _profile!.image = image;
 
     notifyListeners();
-    return this; // chainable
   }
 
   /// ✅ Clear local profile
@@ -57,11 +56,3 @@ class DataHandlingLocal extends ChangeNotifier {
     notifyListeners();
   }
 }
-// final newProfile = Profile(
-//   fullName: "John Doe",
-//   phone: "0987654321",
-//   birthDate: "2001-01-01",
-//   email: "john@example.com",
-// );
-
-// context.read<DataHandlingLocal>().updateProfile(newProfile);

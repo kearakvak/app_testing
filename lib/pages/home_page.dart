@@ -6,6 +6,7 @@ import 'package:app_tesing/components/my_sliver_app_bar.dart';
 import 'package:app_tesing/components/my_tab_bar.dart';
 import 'package:app_tesing/models/food.dart';
 import 'package:app_tesing/models/restaurant.dart';
+import 'package:app_tesing/pages/detail_food.dart';
 import 'package:app_tesing/pages/food_page.dart';
 import 'package:app_tesing/services/navigation_service.dart';
 import 'package:app_tesing/services/request_data_holding.dart';
@@ -158,7 +159,20 @@ class _HomePageState extends State<HomePage>
                   );
                 } else {
                   final food = requestData.data!.recipes[index];
-                  return FoodTile(food: food, onTap: () {});
+                  return FoodTile(
+                    food: food,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => DetailFood(
+                          recipe: food,
+                          // imageUrl: food.imageUrl, // Pass your food data
+                          // title: food.name,
+                          // description: food.description,
+                        ),
+                      );
+                    },
+                  );
                 }
               },
             ),

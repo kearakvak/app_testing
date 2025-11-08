@@ -58,14 +58,14 @@ class _MyDrawerState extends State<MyDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final image = context.watch<DataHandlingLocal>().profileData?.image;
+    // final image = context.watch<DataHandlingLocal>().profileData?.image;
     final data = context.watch<DataHandlingLocal>();
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.background,
       child: SafeArea(
         child: Column(
           children: [
-            ProfileImage(image: image),
+            ProfileImage(image: data.profileData?.image),
             SizedBox(height: 8),
             Text(
               "${data.profileData?.email ?? 'Loading...'}",
@@ -79,7 +79,7 @@ class _MyDrawerState extends State<MyDrawer> {
               text: "Frofile",
               icon: Icons.person,
               onTap: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ProfilePage()),
@@ -120,6 +120,10 @@ class _MyDrawerState extends State<MyDrawer> {
               onTap: () async {
                 final authService = AuthService();
                 await authService.signOut();
+
+                // FIX: Use read instead of watch
+                context.read<DataHandlingLocal>().clear();
+
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => LoginOrRegister()),

@@ -1,5 +1,4 @@
 import 'package:app_tesing/Controller/data_handling_loca.dart';
-import 'package:app_tesing/components/navigator_state_ser.dart';
 import 'package:app_tesing/firebase_options.dart';
 import 'package:app_tesing/models/restaurant.dart';
 import 'package:app_tesing/pages/splashScreen.dart';

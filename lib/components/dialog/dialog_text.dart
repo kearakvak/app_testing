@@ -1,4 +1,4 @@
-import 'package:app_tesing/components/navigator_state_ser.dart';
+import 'package:app_tesing/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 
 void showDialogApp({
@@ -10,13 +10,13 @@ void showDialogApp({
   VoidCallback? onOk,
   VoidCallback? onCancel,
   bool showCancelButton = false,
-  Color backgroundColor = Colors.red, // AppColors.primary,
+  Color backgroundColor = Colors.red,
   TextStyle? buttonTextStyle,
 }) {
-  // 👇 define the helper FIRST before using it
+  // Helper function for buttons
   Widget _button({
-    void Function()? onPress,
-    String? title,
+    required VoidCallback? onPress,
+    required String title,
     Color? background,
     TextStyle? textStyle,
   }) {
@@ -25,19 +25,44 @@ void showDialogApp({
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
         decoration: BoxDecoration(
-          color: background ?? Colors.red, // AppColors.primary,
+          color: background ?? Colors.red,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Text(
-          title ?? "",
-          // type: AppTextType.body,
+          title,
           style: textStyle ?? const TextStyle(color: Colors.white),
         ),
       ),
     );
   }
+
+  // Actually show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          if (showCancelButton)
+            _button(
+              onPress: onCancel ?? () => Navigator.of(context).pop(),
+              title: cancelText,
+              background: Colors.grey,
+            ),
+          _button(
+            onPress: onOk ?? () => Navigator.of(context).pop(),
+            title: okText,
+            background: backgroundColor,
+            textStyle: buttonTextStyle,
+          ),
+        ],
+      );
+    },
+  );
 }
 
+// Updated snackBarApp
 void snackBarApp({
   required String text,
   Color? colorBackground,
@@ -45,11 +70,14 @@ void snackBarApp({
   IconData? icon,
   Color? textColor,
 }) {
-  final context = NavigatorStateSer.maybeContext;
-  if (context == null) return;
+  final context = NavigationService.navigatorKey.currentContext;
+  if (context == null) {
+    print('No context available for snackbar');
+    return;
+  }
 
   final snackBar = SnackBar(
-    backgroundColor: colorBackground ?? Colors.red,
+    backgroundColor: colorBackground ?? Colors.green,
     duration: Duration(seconds: seconds ?? 2),
     behavior: SnackBarBehavior.floating,
     content: Row(
