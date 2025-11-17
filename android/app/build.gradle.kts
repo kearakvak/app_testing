@@ -7,7 +7,8 @@ plugins {
 
 android {
     namespace = "com.example.app_tesing"
-    compileSdk = flutter.compileSdkVersion
+    //compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
    // ndkVersion = flutter.ndkVersion
     ndkVersion = "27.0.12077973"
 
